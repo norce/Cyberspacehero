@@ -1,0 +1,17 @@
+<% debug @areas %>
+<%= console %>
+
+<div id="wrapper">
+  <div id="object_list" style="display:none; float:right;"></div>
+  <div id="ammap_china"></div>
+
+  <div id="console" style="display: none;">
+    <%= image_tag 'info.png', size: '32x32', onclick: '$("#info_china").toggle();' %>
+  </div>
+
+  <div id="info_china">
+    <% render partial: 'info_china' %>
+  </div>
+</div>
+
+<%= javascript_tag render partial: 'map_china', formats: [:js] %>

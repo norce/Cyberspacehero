@@ -1,0 +1,100 @@
+<div id="index">
+  <div id="wrapper">
+    <!---------- hidden in column 3 ---------->
+    <div id="realtime">
+      <% @realtime.each_pair do |key, value| %>
+          <span><%= key %>: </span>
+          <b><%= value %></b><br/>
+      <% end %>
+    </div>
+    <div id="debug">
+      <h1>DEBUG</h1>
+      <%= debug true or @realtime %>
+    </div>
+
+    <!---------- tabs (column 2~4) -------------->
+    <div id="tabs">
+      <ul>
+        <li>实<br>时<br>告<br>警</li>
+        <!--<li>世<br>界<br>分<br>布</li>-->
+        <!--<li>中<br>国<br>分<br>布</li>-->
+      </ul>
+      <div id="tab1">
+        <!---------- column 3 ---------->
+        <div id="charts_container">
+          <div id="recv_acpt_sent_bur_bar2d_container" data-caption="今日总量"></div>
+          <div id="acpt_dept_pie2d_container" data-caption="各IP告警实时图"></div>
+          <div id="sent_front_pie2d_container" data-caption="各端口告警对比"></div>
+          <div id="sent_hour_scrollcombi2d_container" data-caption="分时段告警"></div>
+        </div>
+
+        <!---------- column 4 ---------->
+        <div id="event_container">
+          <div id="scroll_event">
+            <!--<ul class="event">-->
+              <!--<#% events.each do |event| %>-->
+                  <!--<li data-id='<%#= event.cid %>'>-->
+                    <!--<span><b><%#= event.signature %></b></span>-->
+                    <!--<p><%#= event.sig_name %></p>-->
+                    <!--<p><%#= event.src_ip %></p>-->
+                    <!--<p><%#= event.dst_ip %></p>-->
+                  <!--</li>-->
+              <!--<#% end %>-->
+            <!--</ul>-->
+            <% @events.each_pair do |key, events| %>
+                <ul class="<%= key %>">
+                  <% events.each do |event| %>
+                      <li data-id='<%= event.cid %>'>
+                        <% icons = %w(iPhone iPad iMac MacBook notebook PC phone printer router broadcast) %>
+                        <%= image_tag icons[rand(icons.length)] + '.png', size: '128x128' %>
+                        <span><b><%= event.signature %></b></span>
+                        <p><%= event.sig_name %></p>
+                        <p><%= event.src_ip %></p>
+                        <p><%= event.dst_ip %></p>
+                        <span style="float: left; clear: both;"></span>
+                      </li>
+                  <% end %>
+                </ul>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <div id="tab2">
+        <!---------- column 2~3 ---------->
+        <div id="statistic_left">
+          <div id="recv_acpt_dept_radar_container"></div>
+          <div id="recv_meth_pie2d_container"></div>
+          <div id="recv_dir_column2d_container"></div>
+        </div>
+        <!---------- column 4 ---------->
+        <div id="statistic_right">
+          <!--<div id="acpt_dir_dept_stackedbar2d_container"></div>-->
+          <div id="acpt_dir_dept_day_stackedbar2d_container">一日告警对比图</div><!-- data-caption="一日告警对比图" -->
+          <div id="acpt_dir_dept_week_stackedbar2d_container">一周告警对比图</div><!-- data-caption="一周告警对比图" -->
+          <div id="acpt_dir_dept_month_stackedbar2d_container">一月告警对比图</div><!-- data-caption="一月告警对比图" -->
+          <div id="period-select-tabs"><!-- data-caption="（一日/一周/一月）告警对比图" -->
+            <ul>
+              <li id="day">一日</li>
+              <li id="week">一周</li>
+              <li id="month">一月</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!---------- footer ---------->
+  <div id="footer">
+    <% buttons = [
+        {name: '<<', id: 'btn_home'},
+        {name: '<-', id: 'btn_left'},
+        {name: '||', id: 'btn_center'},
+        {name: '->', id: 'btn_right'},
+        {name: '>>', id: 'btn_end'}
+    ] %>
+    <% for button in buttons %><%= button_tag button[:name], id: button[:id] -%>
+    <% end %>
+    <%= link_to '退出三屏浏览模式', '#' %>
+  </div>
+</div>

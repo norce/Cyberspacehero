@@ -1,0 +1,17 @@
+<% attackers = %w(US JP TW GB PH FR RU VN) %>
+
+<ul>
+  <% attackers.each_with_index do |attacker, index| %>
+      <% color = rand(12) * 30 %>
+
+      <li>
+        <img src="/images/flags_iso/128/<%= attacker %>.png" alt="<%= GEO_DICTIONARY[attacker] %>" title="<%= GEO_DICTIONARY[attacker] %>" style="margin-left:10px;">
+        <span style="width:150px; display:inline-block;"><%= GEO_DICTIONARY[attacker] %></span>
+
+        <span id="amcharts_line_<%= attacker %>" style="width:71%; height:124px; display:inline-block; vertical-align:bottom;"></span>
+        <%= javascript_tag render partial: 'amline_attacker', locals: {index: index, attacker: attacker, color: color}, formats: [:js] %>
+
+        <%= image_tag "alert_#{color}.png", size: '80x80', style: 'display:inline-block;', title: color, alt: color; %>
+      </li>
+  <% end %>
+</ul>

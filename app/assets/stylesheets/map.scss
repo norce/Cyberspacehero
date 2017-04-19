@@ -1,0 +1,203 @@
+// Place all the styles related to the map controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+@charset "UTF-8";
+
+#wrapper {
+  height: 2160px;
+  width: 3840px;
+
+  #ammap_world, #ammap_china {
+    background-color: hsl(215, 50%, 34%); // #d5eff7;
+    height: 100%;
+
+    .ammapDescriptionWindow {
+      background-color: hsla(45, 100%, 50%, 0.8);
+      border-radius: 20px;
+      padding: 20px;
+
+      .ammapDescriptionTitle {
+        font: bolder 32px "Microsoft Yahei";
+      }
+
+      .ammapDescriptionText {
+        font: normal 24px "Courier New";
+      }
+    }
+
+  }
+
+  #console {
+    background-color: hsla(0, 100%, 100%, .6);;
+    border-radius: 15px;
+    height: 64px;
+    left: 10px;
+    position: fixed;
+    top: 50px;
+    width: 32px;
+
+    &:hover {
+      box-shadow: 0 0 20px hsl(180, 100%, 50%);
+    }
+
+    img {
+      cursor: pointer;
+      opacity: 0.5;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+
+  #info_world, #info_china {
+    background-color: hsla(0, 0%, 0%, .8);
+    bottom: 0px;
+    color: hsl(180, 100%, 50%);
+    display: none;
+    height: 50%;
+    overflow-y: scroll;
+    position: fixed;
+    width: 100%;
+
+    ul {
+      li {
+        background-color: hsla(180, 100%, 50%, .2);
+        font-size: 40px;
+        margin: 5px;
+      }
+    }
+  }
+
+  #dashboard_world, #dashboard_china {
+    background-color: hsla(0, 0%, 0%, .8);
+    bottom: 0px;
+    color: hsl(180, 100%, 50%);
+    display: none;
+    height: 50%;
+    overflow-y: scroll;
+    position: fixed;
+    width: 100%;
+
+    #ui {
+      background-color: hsla(0, 0%, 25%, 0.5);
+      height: 100%;
+      overflow: hidden;
+      position: absolute;
+      bottom: 0%;
+      left: 0%;
+      width: 100%;
+      font-family: 'Consolas';
+      font-weight: 300;
+
+      #ui-content {
+        display: inline-block;
+        height: 100%;
+        opacity: 0.7;
+
+        #ui-datatable-service {
+          background-color: hsla(0, 0%, 100%, 0.1);
+        }
+
+        #ui-datatable-events {
+          background-color: hsla(180, 100%, 65%, 0.1);
+        }
+
+        .module {
+          float: left;
+          height: 100%;
+          /*padding: 20px;*/
+          margin-right: 1%;
+          color: hsl(180, 100%, 65%);
+          opacity: 1;
+
+          /* clock/ticker */
+          &:last-child {
+            margin-right: 0%;
+            margin-left: 1%;
+          }
+
+          .title {
+            border-left: solid 5px hsl(180, 100%, 65%);
+            position: relative;
+            background-color: hsla(181, 100%, 41%, 0.1);
+            height: 51px;
+            /*font: 14px 'Helvetica Neue', Helvetica;*/
+            /*font: 14px 'Consolas';*/
+            font-family: 'Microsoft Yahei';
+            font-weight: 300;
+            padding: 10px 0 10px 10px;
+            font-size: 1.3vw;
+          }
+
+          .attack-table {
+            //height: calc(100% - 51px);
+
+            tbody {
+              height: 100%;
+
+              .row {
+                cursor: pointer;
+                //padding-left: 0.1%;
+              }
+
+              tr {
+                height: 10%;
+                //
+                //td {
+                //  font-family: "Consolas";
+                //}
+              }
+            }
+          }
+        }
+      }
+
+      table {
+        width: 98%;
+        table-layout: fixed;
+        margin-left: 1%;
+        margin-top: 1%;
+
+        tr:before {
+          content: "";
+        }
+
+        td {
+          border: 0;
+          max-width: 120px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          line-height: 1.15vw;
+        }
+      }
+
+      .header {
+        text-transform: uppercase;
+        font-family: 'Oswald';
+        font-weight: 700;
+      }
+
+      .cell {
+        font-family: 'Open Sans';
+        font-weight: 300;
+        position: relative;
+
+        .flag {
+          bottom: 0;
+          position: absolute;
+        }
+
+        .country-name {
+          padding-left: 40px;
+        }
+      }
+    }
+  }
+
+  image {
+    float: left;
+  }
+}

@@ -12,4 +12,12 @@
  *
  *= require_tree .
  *= require_self
+ *
+ *= require cssreset
+ *
+ *= require ammap/ammap
+ *
+ *= require fancybox/jquery.fancybox
+ *
+ *= require jquery/jquery-ui-1.9.2.custom.min
  */

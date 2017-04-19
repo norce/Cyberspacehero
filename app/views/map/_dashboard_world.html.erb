@@ -1,0 +1,121 @@
+<div id="ui">
+  <div id="ui-content">
+    <!-- Attack Origins -->
+    <div class="module" id="ui-datatable-source" style="width: 12%;">
+      <div class="title">攻击源</div>
+      <table class="table attack-table">
+        <thead>
+        <tr class="header">
+          <td class="number" style="width: 30%;">次数</td>
+          <td style="width: 70%;">国家</td>
+        </tr>
+        </thead>
+        <tbody>
+        <% attack_times = %w(124 97 9 9 7 4 3 2 2 2) %>
+        <% attack_country_codes = %w(CN US NL CO UA TR PL TH RO NZ) %>
+        <% attack_country_codes.each_with_index do |country_code, index| %>
+            <tr link-hover="source" class="row">
+              <td class="cell number"><%= attack_times[index] %></td>
+              <td class="cell">
+                <%= image_tag "/images/flags_iso/32/#{country_code}.png", class: 'flag' %>
+                <span class="country-name"><%= GEO_DICTIONARY[country_code] %></span>
+              </td>
+            </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <!--  Types -->
+    <div class="module" id="ui-datatable-service" style="width: 18%;">
+      <div class="title">攻击类型</div>
+      <table class="table attack-table">
+        <thead>
+        <tr class="header">
+          <td class="number" style="width: 20%;">次数</td>
+          <td style="width: 25%;">端口</td>
+          <td style="width: 55%;">服务类型</td>
+        </tr>
+        </thead>
+        <tbody>
+        <% service_times = %w(82 76 39 20 12 6 5 5 4 3) %>
+        <% service_ports = %w(8080 25 23 3306 3389 445 50856 135 80 22) %>
+        <% service_names = %w(http-alt smtp telnet mysql ms-wbt-server microsoft-ds xsan-filesystem epmap http ssh) %>
+        <% service_ports.each_with_index do |port, index| %>
+            <tr class="row">
+              <td class="cell number"><%= service_times[index] %></td>
+              <td class="cell"><%= port %></td>
+              <td class="cell">
+                <span style="color: hsl(<%= port.to_i % 360 %>,100%,70%);">◯</span>
+                <%= service_names[index] %>
+              </td>
+            </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Targets -->
+    <div class="module" id="ui-datatable-target" style="width: 13%;">
+      <div class="title">攻击目标</div>
+      <table class="table attack-table">
+        <thead>
+        <tr class="header">
+          <td class="number" style="width: 30%;">次数</td>
+          <td style="width: 70%;">国家</td>
+        </tr>
+        </thead>
+        <tbody>
+        <% attacked_times = %w(123 96 20 17 5 3 3 3 1 1) %>
+        <% attacked_country_codes = %w(US AE SG ES AU HK FR BE TH SA) %>
+        <% attacked_country_codes.each_with_index do |country_code, index| %>
+            <tr link-hover="target" class="row">
+              <td class="cell number"><%= attacked_times[index] %></td>
+              <td class="cell">
+                <%= image_tag "/images/flags_iso/32/#{country_code}.png", class: 'flag' %>
+                <span class="country-name"><%= GEO_DICTIONARY[country_code] %></span>
+              </td>
+            </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Live -->
+    <div class="module" id="ui-datatable-events" style="width: 53%;">
+      <div class="title">攻击动态</div>
+      <table class="table attack-table">
+        <thead>
+        <tr class="header">
+          <td class="number" style="width: 14%;">时间戳</td>
+          <td style="width: 20%;">攻击者</td>
+          <td style="width: 16%;">攻击者IP</td>
+          <td style="width: 14%;">攻击者位置</td>
+          <td style="width: 14%;">目标位置</td>
+          <td style="width: 14%;">攻击类型</td>
+          <td style="width: 8%;">端口</td>
+        </tr>
+        </thead>
+        <tbody>
+        <% micro_times = %w(147 146 144 008 008 008 008 007 007 006) %>
+        <% attackers = %w(中国电信江苏省网络 美国微软公司 美国微软公司 哥伦比亚Movistar 哥伦比亚Movistar 哥伦比亚Movistar 哥伦比亚Movistar 哥伦比亚Movistar 哥伦比亚Movistar 哥伦比亚Movistar) %>
+        <% attacker_ips = %w(121.228.147.83 207.46.100.251 65.55.169.251 191.109.185.247 191.109.185.247 191.109.185.247 191.109.185.247 191.109.185.247 191.109.185.247 191.109.185.247) %>
+        <% attacker_locations = %w(Zhangjiagang,CN Redmond,US Washington,US Bogota,CO Bogota,CO Bogota,CO Bogota,CO Bogota,CO Bogota,CO Bogota,CO) %>
+        <% target_locations = %w(Lynnwood,US De_Kalb_Junction,US De_Kalb_Junction,US Madrid,ES Madrid,ES Madrid,ES Madrid,ES Madrid,ES Madrid,ES Madrid,ES) %>
+        <% attack_types = %w(xsan-filesystem smtp smtp telnet telnet telnet telnet telnet telnet telnet) %>
+        <% attacked_ports = %w(50856 25 25 23 23 23 23 23 23 23) %>
+        <% attacker_ips.each_with_index do |ip, index| %>
+            <tr class="row">
+              <td class="cell number">07:34:41.<%= micro_times[index] %></td>
+              <td class="cell"><%= attackers[index] %></td>
+              <td class="cell"><%= ip %></td>
+              <td class="cell"><% attacker_locations[index] %><%= IP_LOCATION_SEEKER.seek(ip) %></td>
+              <td class="cell"><%= target_locations[index] %></td>
+              <td class="cell"><span style="color: hsl(<%= attacked_ports[index].to_i % 360 %>,100%,70%);"><%= attack_types[index] %></span></td>
+              <td class="cell"><%= attacked_ports[index] %></td>
+            </tr>
+        <% end %>
+      </table>
+    </div>
+  </div>
+</div>
