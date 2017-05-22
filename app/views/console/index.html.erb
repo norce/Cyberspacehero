@@ -1,3 +1,5 @@
+<%# console %>
+
 <div id="index">
   <div id="wrapper">
     <!---------- hidden in column 3 ---------->
@@ -22,10 +24,10 @@
       <div id="tab1">
         <!---------- column 3 ---------->
         <div id="charts_container">
-          <div id="recv_acpt_sent_bur_bar2d_container" data-caption="今日总量"></div>
-          <div id="acpt_dept_pie2d_container" data-caption="各IP告警实时图"></div>
-          <div id="sent_front_pie2d_container" data-caption="各端口告警对比"></div>
-          <div id="sent_hour_scrollcombi2d_container" data-caption="分时段告警"></div>
+          <!--<div id="recv_acpt_sent_bur_bar2d_container" data-caption="今日总量"></div>-->
+          <!--<div id="acpt_dept_pie2d_container" data-caption="各IP告警实时图"></div>-->
+          <!--<div id="sent_front_pie2d_container" data-caption="各端口告警对比"></div>-->
+          <!--<div id="sent_hour_scrollcombi2d_container" data-caption="分时段告警"></div>-->
         </div>
 
         <!---------- column 4 ---------->
@@ -46,12 +48,26 @@
                   <% events.each do |event| %>
                       <li data-id='<%= event.cid %>'>
                         <% icons = %w(iPhone iPad iMac MacBook notebook PC phone printer router broadcast) %>
-                        <%= image_tag icons[rand(icons.length)] + '.png', size: '128x128' %>
-                        <span><b><%= event.signature %></b></span>
-                        <p><%= event.sig_name %></p>
-                        <p><%= event.src_ip %></p>
-                        <p><%= event.dst_ip %></p>
-                        <span style="float: left; clear: both;"></span>
+                        <%= image_tag icons[rand(icons.length)] + '.png', size: '128x128', class: 'device-type' %>
+                        <abbr><b><%= event.signature %></b></abbr>
+                        <span>
+                          <% src_location = IP_LOCATION_SEEKER.seek(event.src_ip) %>
+                          <% dst_location = IP_LOCATION_SEEKER.seek(event.dst_ip) %>
+                          <div class="ip-with-location">
+                            <%= image_tag "/images/flags_iso/64/#{location_to_country_code(src_location)}.png", size: '64x64', class: 'country' %>
+                            <p class="ip-address"><%= event.src_ip %></p>
+                            <p class="location"><%= src_location %></p>
+                          </div>
+                          <b class="glyphicon glyphicon-arrow-right"></b>
+                          <div class="ip-with-location">
+                            <%= image_tag "/images/flags_iso/64/#{location_to_country_code(dst_location)}.png", size: '64x64', class: 'country' %>
+                            <p class="ip-address"><%= event.dst_ip %></p>
+                            <p class="location"><%= dst_location %></p>
+                          </div>
+                        </span>
+                        <span class="sig-name"><%= event.sig_name %></span>
+                        <span class="timestamp"><%= event.timestamp.localtime.strftime('%H:%M') %></span>
+                        <span class="sig-type"><%= event.sig_type %></span>
                       </li>
                   <% end %>
                 </ul>

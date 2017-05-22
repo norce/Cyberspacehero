@@ -72,26 +72,26 @@ AmCharts.ready(function () {
     // Areas of each countries
     <%# PROVINCES.each_pair do |name, prov| %>
     <% {}.each_pair do |name, prov| %>
-    <% prov[:id].match(/CN-(\d)(\d)/) %>
-    <% area_id, sub_area_id = $1.to_i, $2.to_i %>
-    dataProvider.areas.push({
-        id: '<%= prov[:id] %>',
-        balloonText: '<img src="/images/flags_iso/128/CN.png"> <br> <%= prov[:title] %>',
-        color: 'hsla(<%= (area_id - 1) * 40 + sub_area_id * 6 %>, <%= 100 - sub_area_id * 4 %>%, 50%, .5)',
-        color: 'hsla(<%= rand(360) %>, <%= 100 - rand(30) %>%, 50%, .5)',
-        description: '<img src="/images/flags_iso/48/CN.png"> description',
-        description: '省份：<%= prov[:title] %><br>' +
-        '省会：<%= PROVINCE_CAPITALS[name][:title] %><br>' +
-        '代码：<%= prov[:id] %><br><hr>' +
-        '国旗：<img src="/images/flags_iso/128/CN.png"><br><hr>' +
-        '随机IP地址：<%= ip = (Array.new(4) {(rand(254) + 1).to_s }).join('.') %><br>' +
-        'IP归属地：<%= location = IP_LOCATION_SEEKER.seek(ip) %> ' +
-        '<img src="/images/flags_iso/48/<%= location_to_country_code(location) %>.png">',
-        title: '<img src="/images/flags_iso/128/CN.png"> <br> <%= prov[:title] %>',
-        outlineAlpha: 1,
-        outlineColor: 'hsla(0, 100%, 100%, .7)',
-        outlineThickness: 1
-    });
+        <% prov[:id].match(/CN-(\d)(\d)/) %>
+        <% area_id, sub_area_id = $1.to_i, $2.to_i %>
+        dataProvider.areas.push({
+            id: '<%= prov[:id] %>',
+            balloonText: '<img src="/images/flags_iso/128/CN.png"> <br> <%= prov[:title] %>',
+            color: 'hsla(<%= (area_id - 1) * 40 + sub_area_id * 6 %>, <%= 100 - sub_area_id * 4 %>%, 50%, .5)',
+            color: 'hsla(<%= rand(360) %>, <%= 100 - rand(30) %>%, 50%, .5)',
+            description: '<img src="/images/flags_iso/48/CN.png"> description',
+            description: '省份：<%= prov[:title] %><br>' +
+                         '省会：<%= PROVINCE_CAPITALS[name][:title] %><br>' +
+                         '代码：<%= prov[:id] %><br><hr>' +
+                         '国旗：<img src="/images/flags_iso/128/CN.png"><br><hr>' +
+                         '随机IP地址：<%= ip = (Array.new(4) {(rand(254) + 1).to_s }).join('.') %><br>' +
+                         'IP归属地：<%= location = IP_LOCATION_SEEKER.seek(ip) %> ' +
+                         '<img src="/images/flags_iso/48/<%= location_to_country_code(location) %>.png">',
+            title: '<img src="/images/flags_iso/128/CN.png"> <br> <%= prov[:title] %>',
+            outlineAlpha: 1,
+            outlineColor: 'hsla(0, 100%, 100%, .7)',
+            outlineThickness: 1
+        });
     <% end %>
 
     <% @areas.each_pair do |code, area| %>
@@ -114,11 +114,11 @@ AmCharts.ready(function () {
 //        color: '',
 //        colorSolid: '',
 //        descriptionWindowBottom: 500,
-        descriptionWindowHeight: 1800,
-        descriptionWindowLeft: 1000,
-        descriptionWindowRight: 1000,
-//        descriptionWindowTop: 500,
-        descriptionWindowWidth: 1840,
+        descriptionWindowHeight: 2000,
+        descriptionWindowLeft: 120,
+//        descriptionWindowRight: 500,
+        descriptionWindowTop: 100,
+        descriptionWindowWidth: 1400,
         outlineAlpha: 0.5,
         outlineColor: 'hsla(0, 100%, 100%, .7)',
         outlineThickness: 3,
@@ -140,42 +140,43 @@ AmCharts.ready(function () {
 
     // Images of each capitals
     <% CAPITALS.each_pair do |code, capital| %>
-    dataProvider.images.push({
-        svgPath: targetSVG,
-        centered: true,
-        height: 15,
-        label: '<%= capital[:title] %>',
-        labelColor: 'hsl(0, 100%, 100%)',
-        labelShiftX: 0,
-        labelShiftY: -15,
-        latitude: <%= capital[:lat] %>,
-        longitude: <%= capital[:long] %>,
-        selectable: true,
-        showInList: true,
-        title: '<img src="/images/flags_iso/128/<%= code %>.png"> <br> <%= GEO_DICTIONARY[code] %> - <%= capital[:title] %>',
+        <% next if %w(HK MO TW).include?(code) %>
+        dataProvider.images.push({
+            svgPath: targetSVG,
+            centered: true,
+            height: 15,
+            label: '<%= capital[:title] %>',
+            labelColor: 'hsl(0, 100%, 100%)',
+            labelShiftX: 0,
+            labelShiftY: -15,
+            latitude: <%= capital[:lat] %>,
+            longitude: <%= capital[:long] %>,
+            selectable: true,
+            showInList: true,
+            title: '<img src="/images/flags_iso/128/<%= code %>.png"> <br> <%= GEO_DICTIONARY[code] %> - <%= capital[:title] %>',
 //            type: 'circle',
-        width: 15
-    });
+            width: 15
+        });
     <% end %>
 
     // Images of each province capitals
     <% PROVINCE_CAPITALS.each_pair do |name, capital| %>
-    dataProvider.images.push({
+        dataProvider.images.push({
 //            svgPath: targetSVG,
-        centered: true,
-        height: 10,
-        label: '<%= capital[:title] %>',
-        labelColor: 'hsl(0, 100%, 100%)',
-        labelShiftX: -2,
-        labelShiftY: -8,
-        latitude: <%= capital[:lat] %>,
-        longitude: <%= capital[:long] %>,
-        selectable: true,
-        showInList: true,
-        title: '<img src="/images/flags_iso/128/CN.png"> <br> <%= PROVINCE_DICTIONARY[name] %> - <%= capital[:title] %>',
-        type: 'circle',
-        width: 10
-    });
+            centered: true,
+            height: 10,
+            label: '<%= capital[:title] %>',
+            labelColor: 'hsl(0, 100%, 100%)',
+            labelShiftX: -2,
+            labelShiftY: -8,
+            latitude: <%= capital[:lat] %>,
+            longitude: <%= capital[:long] %>,
+            selectable: true,
+            showInList: true,
+            title: '<img src="/images/flags_iso/128/CN.png"> <br> <%= PROVINCE_DICTIONARY[name] %> - <%= capital[:title] %>',
+            type: 'circle',
+            width: 10
+        });
     <% end %>
 
     // Images of Target

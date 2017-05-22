@@ -20,4 +20,7 @@
  *= require fancybox/jquery.fancybox
  *
  *= require jquery/jquery-ui-1.9.2.custom.min
+ *
+ *= require bootstrap.min
+ *= require bootstrap-theme.min
  */
