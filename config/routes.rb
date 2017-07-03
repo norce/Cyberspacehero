@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   # get 'map/index'
-  # get 'map/world'
+  get 'map/world'
   get 'map/china'
 
   get 'console/realtime'

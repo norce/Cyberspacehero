@@ -17,6 +17,27 @@ var arrowDoubleSVG = "M160,344 L154,339 L154,339.833333 L159,344 L154,348.166667
 AmCharts.ready(function () {
     map = new AmCharts.AmMap();
 
+    map.titles = [
+        {
+            alpha: 0,
+            bold: true,
+            color: 'hsl(180, 100%, 50%)',
+//            id: 1,
+            size: 60,
+//            tabIndex: 2,
+            text: '隐藏的主标题'
+        },
+        {
+            alpha: 0.8,
+            bold: true,
+            color: 'hsl(30, 100%, 0%)',
+//            id: 1,
+            size: 40,
+//            tabIndex: 3,
+            text: '攻击者IP地址分布态势图'
+        }
+    ];
+
     map.projection = 'winke13';
 
     map.balloon.borderAlpha = 0;
@@ -29,20 +50,21 @@ AmCharts.ready(function () {
     map.fontFamily = 'Microsoft Yahei';
     map.fontSize = 24;
     map.mouseWheelZoomEnabled = true;
-    map.panEventsEnabled = true; // this line enables pinch-zooming and dragging on touch devices
+    // this line enables pinch-zooming and dragging on touch devices
+    map.panEventsEnabled = true;
     map.pathToImages = '/images/ammap/';
     map.showAreasInList = false;
     map.showImagesInList = false;
-    map.zoomControl.panControlEnabled = false;
-    map.zoomControl.zoomControlEnabled = false;
+    map.zoomControl.panControlEnabled = true;
+    map.zoomControl.zoomControlEnabled = true;
 
     var dataProvider = {
         mapVar: AmCharts.maps.worldLow,
 //        mapVar: AmCharts.maps.worldHigh,
 //        mapVar: AmCharts.maps.chinaHigh,
 
-        descriptionWindowHeight: 300,
-        descriptionWindowWidth: 700,
+        descriptionWindowHeight: 100,
+        descriptionWindowWidth: 500,
         descriptionWindowX: 10,
         descriptionWindowY: 10,
 
@@ -55,20 +77,16 @@ AmCharts.ready(function () {
 
     // Areas of each countries
     <% COUNTRIES.each_key do |code| %>
-        <% code.match(/(\w)(\w)/) %>
+        <% next if code == 'CN'  %>
         <% area_id, sub_area_id = $1.to_i, $2.to_i %>
         dataProvider.areas.push({
             id: '<%= code %>',
             balloonText: '<img src="/images/flags_iso/128/<%= code %>.png"> <br> <%= GEO_DICTIONARY[code] %>',
-//            color: 'hsla(<%= (area_id + 1) * 40 + sub_area_id * 6 %>, <%= 100 - sub_area_id * 4 %>%, 50%, .5)',
             color: 'hsla(<%= rand(360) %>, <%= 100 - rand(30) %>%, 50%, .5)',
             description: '国家：<%= GEO_DICTIONARY[code] %><br>' +
                          '首都：<%= CAPITALS[code][:title] %><br>' +
                          '代码：<%= code %><br><hr>' +
-                         '国旗：<img src="/images/flags_iso/128/<%= code %>.png"><br><hr>' +
-                         '随机IP地址：<%= ip = (Array.new(4) {(rand(254) + 1).to_s }).join('.') %><br>' +
-                         'IP归属地：<%= location = IP_LOCATION_SEEKER.seek(ip) %> ' +
-                         '<img src="/images/flags_iso/48/<%= location_to_country_code(location) %>.png">',
+                         '国旗：<img src="/images/flags_iso/128/<%= code %>.png"><br><hr>',
             title: '<img src="/images/flags_iso/48/<%= code %>.png"> <br> <%= GEO_DICTIONARY[code] %>',
             outlineAlpha: 1,
             outlineColor: 'hsla(0, 100%, 100%, .7)',
@@ -76,20 +94,60 @@ AmCharts.ready(function () {
         });
     <% end %>
 
-    map.areasSettings = {
-//        unlistedAreasColor: "#8dd9ef",
-        unlistedAreasColor: "hsl(0, 100%, 50%)",
+    // Areas of China, with URL links to '/map/china'
+    dataProvider.areas.push({
+        id: 'CN',
+        balloonText: '<img src="/images/flags_iso/128/CN.png"> <br> 中国',
+        color: 'hsla(0, 100%, 50%, .5)',
+        description: '国家：中国<br>' +
+                     '首都：北京<br>' +
+                     '代码：CN<br><hr>' +
+                     '国旗：<img src="/images/flags_iso/128/CN.png"><br><hr>' +
+                     // TODO: add action to drill down to china map
+                     '前往：<a href="/map/china" target="_blank">中国地图</a>',
+        title: '<img src="/images/flags_iso/48/CN.png"> <br> 中国',
+        outlineAlpha: 1,
+        outlineColor: 'hsla(0, 100%, 100%, .7)',
+        outlineThickness: 1
+    });
 
+    map.areasSettings = {
+//        adjustOutlineThickness: false,
+//        alpha: 1,
         autoZoom: true,
-        rollOverBrightness: 10,
-        selectedBrightness: 20
+        balloonText: '<img src="/images/flags_iso/128/CN.png"> <br> [[title]]',
+//        bringForwardOnHover: true,
+//        color: '',
+//        colorSolid: '',
+//        descriptionWindowBottom: 500,
+        descriptionWindowHeight: 2000,
+        descriptionWindowLeft: 120,
+//        descriptionWindowRight: 500,
+        descriptionWindowTop: 100,
+        descriptionWindowWidth: 1400,
+        outlineAlpha: 0.5,
+        outlineColor: 'hsla(0, 100%, 100%, .7)',
+        outlineThickness: 3,
+        rollOverColor: 'hsl(45, 100%, 40%)',
+        rollOverOutlineAlpha: 0.5,
+        rollOverOutlineColor: 'hsl(0, 100%, 50%)',
+        rollOverOutlineThickness: 6,
+        selectable: true,
+        selectedColor: 'hsl(180, 100%, 40%)',
+        selectedOutlineColor: 'hsl(0, 0%, 0%)',
+        selectedOutlineThickness: 6,
+//        tabIndex: 1,
+//        unlistedAreasAlpha: 1,
+        unlistedAreasColor: 'hsl(120, 50%, 30%)',    // '#8dd9ef'
+        unlistedAreasOutlineAlpha: 0.5,
+//        unlistedAreasOutlineColor: ''
     };
 
 
     // Images of each capitals
     <% CAPITALS.each_pair do |code, capital| %>
         dataProvider.images.push({
-//            svgPath: targetSVG,
+            // svgPath: targetSVG,
             centered: true,
             height: 5,
             label: '<%= capital[:title] %>',
@@ -106,52 +164,35 @@ AmCharts.ready(function () {
         });
     <% end %>
 
-    // cities
-//    dataProvider.images.push({
-//        svgPath: targetSVG,
-//        title: "Paris",
-//        latitude: 48.8567,
-//        longitude: 2.3510
-//    }, {
-//        svgPath: targetSVG,
-//        title: "Toronto",
-//        latitude: 43.8163,
-//        longitude: -79.4287
-//    }, {
-//        svgPath: targetSVG,
-//        title: "Los Angeles",
-//        latitude: 34.3,
-//        longitude: -118.15
-//    }, {
-//        svgPath: targetSVG,
-//        title: "Havana",
-//        latitude: 23,
-//        longitude: -82
-//    }, {
-//        svgPath: planeSVG,
-//        positionOnLine: 0,
-//        color: "#FFFFFF", // "#000000",
-//        alpha: 0.1,
-//        animateAlongLine: true,
-//        lineId: "line2",
-//        flipDirection: true,
-//        loop: true,
-//        scale: 0.03,
-//        positionScale: 1.3
-//    }, {
-//        svgPath: planeSVG,
-//        positionOnLine: 0,
-//        color: "#FFFFFF", // "#585869",
-//        animateAlongLine: true,
-//        lineId: "line1",
-//        flipDirection: true,
-//        loop: true,
-//        scale: 0.03,
-//        positionScale: 1.8
-//    });
+    // Images of each province capitals
+    <% PROVINCE_CAPITALS.each_pair do |name, capital| %>
+        dataProvider.images.push({
+            //  svgPath: targetSVG,
+            centered: true,
+            description: '<%=raw @areas[name][:description] if @areas[name] %>',
+            height: 10,
+            label: '<%= capital[:title] %>',
+            labelColor: 'hsl(0, 100%, 100%)',
+            labelShiftX: -2,
+            labelShiftY: -8,
+            latitude: <%= capital[:lat] %>,
+            longitude: <%= capital[:long] %>,
+            selectable: true,
+            showInList: true,
+            title: '<img src="/images/flags_iso/128/CN.png"> <br> <%= PROVINCE_DICTIONARY[name] %> - <%= capital[:title] %>',
+            type: 'circle',
+            width: 10
+    });
+    <% end %>
 
     map.imagesSettings = {
         color: "#FFFFFF", // "#585869",
+        //  descriptionWindowBottom: 500,
+        descriptionWindowHeight: 2000,
+        descriptionWindowLeft: 120,
+        //  descriptionWindowRight: 500,
+        descriptionWindowTop: 100,
+        descriptionWindowWidth: 1400,
         rollOverColor: "#FF0000", // "#585869",
         selectedColor: "#FFFF00", // "#585869",
         pauseDuration: 0.2,
@@ -187,20 +228,34 @@ AmCharts.ready(function () {
         <% end %>
     <% end %>
 
-    // LONDON
-//    dataProvider.lines.push({
-//        id: "line1",
-//        arc: -0.85,
-//        alpha: 0.3,
-//        latitudes: [48.8567, 43.8163, 34.3, 23],
-//        longitudes: [2.3510, -79.4287, -118.15, -82]
-//    }, {
-//        id: "line2",
-//        alpha: 0,
-//        color: "#000000",
-//        latitudes: [48.8567, 43.8163, 34.3, 23],
-//        longitudes: [2.3510, -79.4287, -118.15, -82]
-//    });
+
+    // Lines to XinYang, with animate icon go along the line route
+    <% @areas.each_pair do |code, area| %>
+    <% prov = PROVINCES[code] %>
+    <% capital = PROVINCE_CAPITALS[code] %>
+        dataProvider.lines.push({
+            id: "line_<%= prov[:id] %>",
+            arc: -0.5,
+            alpha: 0.3,
+            thickness: <%= area[:thickness] %>,
+            latitudes: [<%= capital[:lat] %>, <%= CITIES['信阳'][:lat] %>],
+            longitudes: [<%= capital[:long] %>, <%= CITIES['信阳'][:long] %>]
+        });
+
+        dataProvider.images.push({
+            svgPath: arrowDoubleSVG,    // planeSVG, tripleBarSVG, targetSVG, trackArrowSVG, doubleArrowSVG, luxuryArrowSVG, arrowSVG, arrowDoubleSVG
+            rotate: 45,
+            positionOnLine: 0,
+            color: 'hsla(0, 100%, 100%, 1)',   // 'hsla(<%= rand(12) * 30 %>, 100%, <%= rand(6) * 20 %>%, 1)', // "#585869",
+            alpha: 1,
+            animateAlongLine: true,
+            lineId: "line_<%= prov[:id] %>",
+            flipDirection: false,
+            loop: true,
+            scale: 1,    // 0.05, 0.5, 0.9, 0.9, 0.03, 0.5, 0.04, 1
+            positionScale: 1.8
+        });
+    <% end  %>
 
     map.linesSettings = {
         color: "#FFFFFF", // "#585869",

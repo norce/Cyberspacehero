@@ -90,7 +90,7 @@ realtime_data_driver = ->
       <b>level_mediums:</b> #{(level_medium.sig_name for level_medium in response.level_mediums).join('<br />' + Array(8).join('&nbsp;'))}
       <b>level_highs:</b> #{(level_high.sig_name for level_high in response.level_highs).join('<br />' + Array(8).join('&nbsp;'))}
       """
-    $("#debug").effect('highlight', {color: 'hsl(180, 100%, 70%)'}, 1500)
+#    $("#debug").effect('highlight', {color: 'hsl(180, 100%, 70%)'}, 1500)
 
     b$ = $('#realtime b')
     if response.latest_level_low isnt response.last_level_low

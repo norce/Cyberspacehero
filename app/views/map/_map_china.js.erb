@@ -6,6 +6,12 @@ var targetSVG = "M9,0C4.029,0,0,4.029,0,9s4.029,9,9,9s9-4.029,9-9S13.971,0,9,0z 
 var planeSVG = "m2,106h28l24,30h72l-44,-133h35l80,132h98c21,0 21,34 0,34l-98,0 -80,134h-35l43,-133h-71l-24,30h-28l15,-47";
 // svg path for triple bar icon
 var tripleBarSVG = 'M21.25,8.375V28h6.5V8.375H21.25zM12.25,28h6.5V4.125h-6.5V28zM3.25,28h6.5V12.625h-6.5V28z';
+// svg path for arrow icon
+var trackArrowSVG = "M-576-32l32-16l-8,16l8,16L-576-32z";
+var doubleArrowSVG = "m 91.860396,593.62783 c -5.09105,0 -10.15073,2.11819 -13.75,5.71875 l -55,55 c -3.59127,3.59815 -5.6875,8.63504 -5.6875,13.71875 0,5.08369 2.09623,10.15184 5.6875,13.75 L 137.6729,796.37783 23.110396,910.94033 c -3.66423,3.66678 -5.76442,8.84801 -5.6875,14.03125 0.0784,4.9853 2.16308,9.91076 5.6875,13.4375 l 55,55 c 3.59927,3.6006 8.65895,5.6875 13.75,5.6875 5.09105,0 10.150734,-2.0869 13.750004,-5.6875 L 288.89165,810.12783 c 3.60056,-3.59928 5.6875,-8.65895 5.6875,-13.75 0,-5.09105 -2.08694,-10.15073 -5.6875,-13.75 L 105.6104,599.34658 c -3.59927,-3.60056 -8.658954,-5.71875 -13.750004,-5.71875 z m 200.000004,0 c -5.09105,0 -10.15073,2.11819 -13.75,5.71875 l -55,55 c -3.59127,3.59815 -5.6875,8.63504 -5.6875,13.71875 0,5.08369 2.09623,10.15184 5.6875,13.75 l 114.5625,114.5625 -114.5625,114.5625 c -3.66423,3.66678 -5.76442,8.84801 -5.6875,14.03125 0.0784,4.9853 2.16308,9.91076 5.6875,13.4375 l 55,55 c 3.59927,3.6006 8.65895,5.6875 13.75,5.6875 5.09105,0 10.15073,-2.0869 13.75,-5.6875 L 488.89165,810.12783 c 3.60056,-3.59928 5.6875,-8.65895 5.6875,-13.75 0,-5.09105 -2.08694,-10.15073 -5.6875,-13.75 L 305.6104,599.34658 c -3.59927,-3.60056 -8.65895,-5.71875 -13.75,-5.71875 z"
+var luxuryArrowSVG = "M31.697,15.287  c-0.011-0.011-6.947-6.993-6.947-6.993c-0.203-0.203-0.47-0.298-0.735-0.291c-0.008,0-0.015-0.005-0.023-0.005h-23  c-0.88,0-1.32,1.109-0.705,1.727l6.242,6.295l-6.169,6.222C-0.305,22.859-0.009,24,1.203,23.998h22.78  c0.278,0.018,0.561-0.07,0.774-0.284l6.94-6.999C32.09,16.321,32.09,15.681,31.697,15.287z M23.626,21.991L3.439,21.997l5.21-5.254  c0.199-0.2,0.295-0.462,0.293-0.724c0.003-0.262-0.094-0.524-0.293-0.724L3.396,9.998h20.204l5.959,6.01L23.626,21.991z"
+var arrowSVG = "m 96.00877,871.36623 c 2.6e-4,2.61792 1.07807,5.21962 2.92923,7.07077 1.85115,1.85116 4.45285,2.92897 7.07077,2.92923 l 140,0 0,65 c 0.008,3.92171 2.55252,7.7213 6.17608,9.22116 3.62357,1.49987 8.10933,0.61039 10.88642,-2.15866 l 150,-150 c 1.84587,-1.85072 2.91996,-4.44861 2.91996,-7.0625 0,-2.61389 -1.07409,-5.21178 -2.91996,-7.0625 l -150,-150 c -2.77709,-2.76905 -7.26285,-3.65853 -10.88642,-2.15866 -3.62356,1.49986 -6.16843,5.29945 -6.17608,9.22116 l 0,65 -140,0 c -2.61792,2.6e-4 -5.21962,1.07807 -7.07077,2.92923 -1.85116,1.85115 -2.92897,4.45285 -2.92923,7.07077 z"
+var arrowDoubleSVG = "M160,344 L154,339 L154,339.833333 L159,344 L154,348.166667 L154,349 L160,344 L160,344 Z M158,344 L152,339 L152,342.081559 C148.460721,342.401309 145.692963,343.767593 144,348 C146.478653,345.934456 148.957306,345.234183 152,345.617183 L152,349 L158,344 L158,344 Z M158,344"
 
 
 AmCharts.ready(function () {
@@ -98,7 +104,7 @@ AmCharts.ready(function () {
         <% prov = PROVINCES[code] %>
         dataProvider.areas.push({
             id: '<%= prov[:id] %>',
-    //            balloonText: '[[title]]',
+            //  balloonText: '[[title]]',
             color: 'hsla(0, <%= area[:saturation] %>%, <%= area[:saturation]/2+20 %>%, 1)',
             description: '<%=raw area[:description] %>',
             title: '<%= "#{prov[:title]}（#{area[:ips].length}）" %>'
@@ -162,7 +168,7 @@ AmCharts.ready(function () {
     // Images of each province capitals
     <% PROVINCE_CAPITALS.each_pair do |name, capital| %>
         dataProvider.images.push({
-//            svgPath: targetSVG,
+            //  svgPath: targetSVG,
             centered: true,
             height: 10,
             label: '<%= capital[:title] %>',
@@ -211,41 +217,55 @@ AmCharts.ready(function () {
     // Lines of each routes
     <%# CAPITALS.each_pair do |code, capital| %>
     <% if rand(10) > 9 %>
-    dataProvider.lines.push({
-        id: "line_<%= code %>",
-        arc: -0.85,
-        alpha: 0.3,
-        color: '#00AAAA',
-        latitudes: [<%= capital[:lat] %>, <%= PROVINCE_CAPITALS['北京'][:lat] %>],
-        longitudes: [<%= capital[:long] %>, <%= PROVINCE_CAPITALS['北京'][:long] %>]
-    });
+        dataProvider.lines.push({
+            id: "line_<%= code %>",
+            arc: -0.85,
+            alpha: 0.3,
+            color: '#00AAAA',
+            latitudes: [<%= capital[:lat] %>, <%= PROVINCE_CAPITALS['北京'][:lat] %>],
+            longitudes: [<%= capital[:long] %>, <%= PROVINCE_CAPITALS['北京'][:long] %>]
+        });
     <% end %>
     <%# end %>
 
     <%# PROVINCE_CAPITALS.each_pair do |name, capital| %>
     <% if rand(10) > 9 %>
-    dataProvider.lines.push({
-        id: "line_<%= PROVINCE_CAPITALS.keys.index(name) %>",
-        arc: -0.5,
-        alpha: 0.5,
-        latitudes: [<%= capital[:lat] %>, <%= PROVINCE_CAPITALS['北京'][:lat] %>],
-        longitudes: [<%= capital[:long] %>, <%= PROVINCE_CAPITALS['北京'][:long] %>]
-    });
+        dataProvider.lines.push({
+            id: "line_<%= PROVINCE_CAPITALS.keys.index(name) %>",
+            arc: -0.5,
+            alpha: 0.5,
+            latitudes: [<%= capital[:lat] %>, <%= PROVINCE_CAPITALS['北京'][:lat] %>],
+            longitudes: [<%= capital[:long] %>, <%= PROVINCE_CAPITALS['北京'][:long] %>]
+        });
     <% end %>
     <%# end %>
 
-    // Lines to XinYang
+    // Lines to XinYang, with animate icon go along the line route
     <% @areas.each_pair do |code, area| %>
-    <% prov = PROVINCES[code] %>
-    <% capital = PROVINCE_CAPITALS[code] %>
-    dataProvider.lines.push({
-        id: "line_<%= prov[:id] %>",
-        arc: -0.5,
-        alpha: 0.3,
-        thickness: <%= area[:thickness] %>,
-        latitudes: [<%= capital[:lat] %>, <%= CITIES['信阳'][:lat] %>],
-        longitudes: [<%= capital[:long] %>, <%= CITIES['信阳'][:long] %>]
-    });
+        <% prov = PROVINCES[code] %>
+        <% capital = PROVINCE_CAPITALS[code] %>
+        dataProvider.lines.push({
+            id: "line_<%= prov[:id] %>",
+            arc: -0.5,
+            alpha: 0.3,
+            thickness: <%= area[:thickness] %>,
+            latitudes: [<%= capital[:lat] %>, <%= CITIES['信阳'][:lat] %>],
+            longitudes: [<%= capital[:long] %>, <%= CITIES['信阳'][:long] %>]
+        });
+
+        dataProvider.images.push({
+            svgPath: arrowDoubleSVG,    // planeSVG, tripleBarSVG, targetSVG, trackArrowSVG, doubleArrowSVG, luxuryArrowSVG, arrowSVG, arrowDoubleSVG
+            rotate: 45,
+            positionOnLine: 0,
+            color: 'hsla(0, 100%, 100%, 1)',   // 'hsla(<%= rand(12) * 30 %>, 100%, <%= rand(6) * 20 %>%, 1)', // "#585869",
+            alpha: 1,
+            animateAlongLine: true,
+            lineId: "line_<%= prov[:id] %>",
+            flipDirection: false,
+            loop: true,
+            scale: 3,    // 0.05, 0.5, 0.9, 0.9, 0.03, 0.5, 0.04, 1
+            positionScale: 1.8
+        });
     <% end  %>
 
     map.linesSettings = {

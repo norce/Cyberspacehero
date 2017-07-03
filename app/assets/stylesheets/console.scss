@@ -29,8 +29,8 @@ body {
 }
 
 #index {
-  overflow-y: hidden;
-  //overflow: hidden;
+  //overflow-y: hidden;
+  overflow: hidden;
 
   #wrapper {
     height: 2160px; // 2086px; // 768px;
@@ -40,6 +40,7 @@ body {
     position: relative;
 
     #map_container {
+      #map_world,
       #map_china {
         height: 768px;
         width: 33.33%;
@@ -63,6 +64,7 @@ body {
         }
       }
 
+      #map_world_list,
       #map_china_list {
         height: 768px;
         right: 0px;
@@ -95,6 +97,7 @@ body {
     }
     #realtime, #debug {
       bottom: 12px;
+      //display: none;
       height: 96px;
 
       background-color: hsla(0, 0%, 0%, .5);

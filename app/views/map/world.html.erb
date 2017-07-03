@@ -1,19 +1,15 @@
-<%= debug @areas %>
+<% debug @areas %>
 
 <div id="wrapper">
+  <div id="object_list" style="display:none; float:right;"></div>
   <div id="ammap_world"></div>
 
-  <div id="console">
+  <div id="console" style="display: none;">
     <%= image_tag 'info.png', size: '32x32', onclick: '$("#info_world").toggle();' %>
-    <%= image_tag 'dashboard.png', size: '32x32', onclick: '$("#dashboard_world").toggle();', style: 'top: 40px;' %>
   </div>
 
   <div id="info_world">
     <% render partial: 'info_world' %>
-  </div>
-
-  <div id="dashboard_world">
-    <%= render partial: 'dashboard_world' %>
   </div>
 </div>
 
