@@ -792,4 +792,5 @@ PROVINCE_CAPITALS = {'北京' => {title: '北京', long: 116.387909, lat: 39.906
                      '香港' => {title: '香港', long: 114.153542, lat: 22.411249},
                      '澳门' => {title: '澳门', long: 113.5502, lat: 22.1636915147872}}
 
-CITIES = {'信阳' => {title: '信阳', long: 114.08, lat: 32.13}}
+CITIES = {'信阳' => {title: '信阳', long: 114.08, lat: 32.13},
+          '安阳' => {title: '安阳', long: 114.35, lat: 36.10}}

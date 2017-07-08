@@ -5,8 +5,8 @@
 @charset "UTF-8";
 
 #wrapper {
-  height: 2160px;
-  width: 3840px;
+  height: 1080px; // 2160px;
+  width: 100%; // 3840px;
 
   #ammap_world, #ammap_china {
     background-color: hsl(215, 50%, 34%); // #d5eff7;

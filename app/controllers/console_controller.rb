@@ -33,14 +33,14 @@ class ConsoleController < ApplicationController
 
 
       # original
-      # level_lows: [],
-      # level_mediums: [],
-      # level_highs: []
+      level_lows: [],
+      level_mediums: [],
+      level_highs: []
 
       # for DEBUG! Use with care
-      level_lows: Event.where("sig_class_id in (#{Event::SIG_LEVEL_IDS[:low].join ', '})").order('timestamp DESC').limit(rand(3)),
-      level_mediums: Event.where("sig_class_id in (#{Event::SIG_LEVEL_IDS[:medium].join ', '})").order('timestamp DESC').limit(rand(3)),
-      level_highs: Event.where("sig_class_id in (#{Event::SIG_LEVEL_IDS[:high].join ', '})").order('timestamp DESC').limit(rand(3))
+      # level_lows: Event.where("sig_class_id in (#{Event::SIG_LEVEL_IDS[:low].join ', '})").order('timestamp DESC').limit(rand(3)),
+      # level_mediums: Event.where("sig_class_id in (#{Event::SIG_LEVEL_IDS[:medium].join ', '})").order('timestamp DESC').limit(rand(3)),
+      # level_highs: Event.where("sig_class_id in (#{Event::SIG_LEVEL_IDS[:high].join ', '})").order('timestamp DESC').limit(rand(3))
     }.merge(ConsoleController.get_realtime_data)
 
     if realtime[:last_level_low] != realtime[:latest_level_low] or realtime[:last_level_low_cid] != realtime[:latest_level_low_cid]
@@ -55,10 +55,10 @@ class ConsoleController < ApplicationController
 
     [:level_lows, :level_mediums, :level_highs].each do |type|
       realtime[type] = realtime[type].inject([]) do |collection, event|
-        src_ip = "#{rand(256)}.#{rand(256)}.#{rand(256)}.#{rand(256)}"
-        # src_ip = event.src_ip
-        dst_ip = "#{rand(256)}.#{rand(256)}.#{rand(256)}.#{rand(256)}"
-        # dst_ip = event.dst_ip
+        # src_ip = "#{rand(256)}.#{rand(256)}.#{rand(256)}.#{rand(256)}"
+        src_ip = event.src_ip
+        # dst_ip = "#{rand(256)}.#{rand(256)}.#{rand(256)}.#{rand(256)}"
+        dst_ip = event.dst_ip
 
         src_location = IP_LOCATION_SEEKER.seek(src_ip)
         dst_location = IP_LOCATION_SEEKER.seek(dst_ip)

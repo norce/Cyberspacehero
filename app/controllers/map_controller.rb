@@ -84,7 +84,7 @@ class MapController < ApplicationController
   end
 
   def china
-    target_ip = '125.219.116.29'
+    # target_ip = '125.219.116.29'
 
     # src_ips = Event.select('DISTINCT ip_src').collect { |event| event.src_ip }
     # dst_ips = Event.select('DISTINCT ip_dst').collect { |event| event.dst_ip }
@@ -122,7 +122,7 @@ class MapController < ApplicationController
       events = hash[:events]
       events.each do |event|
         ip = event.send(hash[:ip_type])
-        next if ip == target_ip
+        # next if ip == target_ip
 
         location = IP_LOCATION_SEEKER.seek(ip)
         # code = location_to_country_code(location)

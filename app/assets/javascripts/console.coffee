@@ -238,9 +238,9 @@ $ ->
   setInterval ( ->
     update_all_data() ), 7000
 
-  # Set Timer to force refresh page, per 10min
+  # Set Timer to force refresh page, per 1 min
   setInterval ( ->
-    location.reload(true) ), 600000
+    location.reload(true) ), 60000
 
   # Footer Buttons
   #  $('#btn_enter_3wide').click ->

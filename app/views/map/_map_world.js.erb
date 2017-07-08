@@ -78,7 +78,6 @@ AmCharts.ready(function () {
     // Areas of each countries
     <% COUNTRIES.each_key do |code| %>
         <% next if code == 'CN'  %>
-        <% area_id, sub_area_id = $1.to_i, $2.to_i %>
         dataProvider.areas.push({
             id: '<%= code %>',
             balloonText: '<img src="/images/flags_iso/128/<%= code %>.png"> <br> <%= GEO_DICTIONARY[code] %>',
@@ -120,7 +119,7 @@ AmCharts.ready(function () {
 //        color: '',
 //        colorSolid: '',
 //        descriptionWindowBottom: 500,
-        descriptionWindowHeight: 2000,
+        descriptionWindowHeight: 800,
         descriptionWindowLeft: 120,
 //        descriptionWindowRight: 500,
         descriptionWindowTop: 100,
@@ -229,7 +228,7 @@ AmCharts.ready(function () {
     <% end %>
 
 
-    // Lines to XinYang, with animate icon go along the line route
+    // Lines to 安阳, with animate icon go along the line route
     <% @areas.each_pair do |code, area| %>
     <% prov = PROVINCES[code] %>
     <% capital = PROVINCE_CAPITALS[code] %>
@@ -238,8 +237,8 @@ AmCharts.ready(function () {
             arc: -0.5,
             alpha: 0.3,
             thickness: <%= area[:thickness] %>,
-            latitudes: [<%= capital[:lat] %>, <%= CITIES['信阳'][:lat] %>],
-            longitudes: [<%= capital[:long] %>, <%= CITIES['信阳'][:long] %>]
+            latitudes: [<%= capital[:lat] %>, <%= CITIES['安阳'][:lat] %>],
+            longitudes: [<%= capital[:long] %>, <%= CITIES['安阳'][:long] %>]
         });
 
         dataProvider.images.push({
@@ -250,8 +249,8 @@ AmCharts.ready(function () {
             alpha: 1,
             animateAlongLine: true,
             lineId: "line_<%= prov[:id] %>",
-            flipDirection: false,
-            loop: true,
+            flipDirection: true,
+            loop: false,
             scale: 1,    // 0.05, 0.5, 0.9, 0.9, 0.03, 0.5, 0.04, 1
             positionScale: 1.8
         });
