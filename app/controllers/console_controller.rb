@@ -18,6 +18,8 @@ class ConsoleController < ApplicationController
   end
 
   def realtime
+    debug = false  # true
+
     realtime = {
       last_level_low: params[:last_level_low],
       last_level_medium: params[:last_level_medium],
@@ -53,19 +55,30 @@ class ConsoleController < ApplicationController
       realtime[:level_highs] += Event.where("sig_class_id in (#{Event::SIG_LEVEL_IDS[:high].join ', '}) AND (timestamp BETWEEN '#{next_second(realtime[:last_level_high])}' AND '#{realtime[:latest_level_high]}' OR cid > #{realtime[:last_level_high_cid]})")
     end
 
+
+    if debug
+      realtime[:level_lows] += Event.where("sig_class_id in (#{Event::SIG_LEVEL_IDS[:low].join ', '})").order('timestamp DESC').limit(rand(3))
+      realtime[:level_mediums] += Event.where("sig_class_id in (#{Event::SIG_LEVEL_IDS[:medium].join ', '})").order('timestamp DESC').limit(rand(3))
+      realtime[:level_highs] += Event.where("sig_class_id in (#{Event::SIG_LEVEL_IDS[:high].join ', '})").order('timestamp DESC').limit(rand(3))
+    end
+
     [:level_lows, :level_mediums, :level_highs].each do |type|
       realtime[type] = realtime[type].inject([]) do |collection, event|
         # src_ip = "#{rand(256)}.#{rand(256)}.#{rand(256)}.#{rand(256)}"
-        src_ip = event.src_ip
+        # src_ip = event.src_ip
+        src_ip = debug ? "#{rand(256)}.#{rand(256)}.#{rand(256)}.#{rand(256)}" : event.src_ip
         # dst_ip = "#{rand(256)}.#{rand(256)}.#{rand(256)}.#{rand(256)}"
-        dst_ip = event.dst_ip
+        # dst_ip = event.dst_ip
+        dst_ip = debug ? "#{rand(256)}.#{rand(256)}.#{rand(256)}.#{rand(256)}" : event.dst_ip
 
         src_location = IP_LOCATION_SEEKER.seek(src_ip)
         dst_location = IP_LOCATION_SEEKER.seek(dst_ip)
         src_country = location_to_country_code(src_location)
         dst_country = location_to_country_code(dst_location)
-        src_location = "#{src_location[0..15]}..." if src_location.length > 17
-        dst_location = "#{dst_location[0..15]}..." if dst_location.length > 17
+        # src_location = "#{src_location[0..15]}..." if src_location.length > 17
+        src_location = "#{src_location[0..10]}..." if src_location.length > 12
+        # dst_location = "#{dst_location[0..15]}..." if dst_location.length > 17
+        dst_location = "#{dst_location[0..10]}..." if dst_location.length > 12
 
         occurred_at = event.timestamp.localtime.strftime('%H:%M')
         # occurred_at = realtime["last_#{type.to_s.singularize}".to_sym]

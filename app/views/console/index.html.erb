@@ -54,15 +54,15 @@
                           <% src_location = IP_LOCATION_SEEKER.seek(event.src_ip) %>
                           <% dst_location = IP_LOCATION_SEEKER.seek(event.dst_ip) %>
                           <div class="ip-with-location">
-                            <%= image_tag "/images/flags_iso/64/#{location_to_country_code(src_location)}.png", size: '64x64', class: 'country' %>
+                            <%= image_tag "/images/flags_iso/64/#{location_to_country_code(src_location)}.png", size: '32x32', class: 'country' %>
                             <p class="ip-address"><%= event.src_ip %></p>
-                            <p class="location"><%= src_location %></p>
+                            <p class="location"><%= src_location[0,12] %></p>
                           </div>
                           <b class="glyphicon glyphicon-arrow-right"></b>
                           <div class="ip-with-location">
-                            <%= image_tag "/images/flags_iso/64/#{location_to_country_code(dst_location)}.png", size: '64x64', class: 'country' %>
+                            <%= image_tag "/images/flags_iso/64/#{location_to_country_code(dst_location)}.png", size: '32x32', class: 'country' %>
                             <p class="ip-address"><%= event.dst_ip %></p>
-                            <p class="location"><%= dst_location %></p>
+                            <p class="location"><%= dst_location[0,12] %></p>
                           </div>
                         </span>
                         <span class="sig-name"><%= event.sig_name %></span>

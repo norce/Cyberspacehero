@@ -113,9 +113,9 @@ update_scroll_event = (events, type) ->
   ul$ = $("#scroll_event .#{type}")
   if events.length > 0
     list_array = ("<li data-id='#{event.cid}'><img src='/assets/#{randomIcon()}.png' class='device-type' width='128' height='128'><abbr><b>#{event.signature}</b></abbr><span>" +
-      "<div class='ip-with-location'><img src='/images/flags_iso/64/#{event.src_country}.png' class='country' width='64' height='64'>" +
+      "<div class='ip-with-location'><img src='/images/flags_iso/64/#{event.src_country}.png' class='country' width='32' height='32'>" +
       "<p class='ip-address'>#{event.src_ip}</p><p class='location'>#{event.src_location}</p></div> <b class='glyphicon glyphicon-arrow-right'></b> " +
-      "<div class='ip-with-location'><img src='/images/flags_iso/64/#{event.dst_country}.png' class='country' width='64' height='64'>" +
+      "<div class='ip-with-location'><img src='/images/flags_iso/64/#{event.dst_country}.png' class='country' width='32' height='32'>" +
       "<p class='ip-address'>#{event.dst_ip}</p><p class='location'>#{event.dst_location}</p></div></span>" +
       "<span class='sig-name'>#{event.sig_name}</span><span class='timestamp'>#{event.occurred_at}</span><span class='sig-type'>#{event.sig_type}</span></li>" for event in events)
     lists$ = $(list_array.join '').prependTo(ul$).hide()

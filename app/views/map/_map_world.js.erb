@@ -44,6 +44,7 @@ AmCharts.ready(function () {
     map.balloon.color = 'hsl(0, 100%, 100%)';
     map.balloon.fillAlpha = 1;
     map.balloon.fillColor = 'hsl(0, 100%, 40%)';
+    map.balloon.maxlength = 1000;
 //    map.balloon.fontSize = 20;
     map.dragMap = true;
     map.fontColor = 'hsl(0, 100%, 100%)';
@@ -80,13 +81,13 @@ AmCharts.ready(function () {
         <% next if code == 'CN'  %>
         dataProvider.areas.push({
             id: '<%= code %>',
-            balloonText: '<img src="/images/flags_iso/128/<%= code %>.png"> <br> <%= GEO_DICTIONARY[code] %>',
+            balloonText: '<img src="/images/flags_iso/64/<%= code %>.png"> <%= GEO_DICTIONARY[code] %>',
             color: 'hsla(<%= rand(360) %>, <%= 100 - rand(30) %>%, 50%, .5)',
             description: '国家：<%= GEO_DICTIONARY[code] %><br>' +
                          '首都：<%= CAPITALS[code][:title] %><br>' +
                          '代码：<%= code %><br><hr>' +
                          '国旗：<img src="/images/flags_iso/128/<%= code %>.png"><br><hr>',
-            title: '<img src="/images/flags_iso/48/<%= code %>.png"> <br> <%= GEO_DICTIONARY[code] %>',
+            title: '<img src="/images/flags_iso/48/<%= code %>.png"> <%= GEO_DICTIONARY[code] %>',
             outlineAlpha: 1,
             outlineColor: 'hsla(0, 100%, 100%, .7)',
             outlineThickness: 1
